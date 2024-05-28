@@ -3,78 +3,61 @@
 #include <limits.h>
 #include "queue.h"
 
-void enqueue(QueueNode **root, char data)
-{
-    QueueNode *qNode = malloc(sizeof(QueueNode));
+void enqueue(QueueNode** root, char data){
+    QueueNode* qNode = malloc(sizeof(QueueNode));
     qNode->data = data;
     qNode->next = NULL;
-    if (isEmpty(*root))
-    {
+    if(isEmpty(*root)){
         *root = qNode;
     }
-    else
-    {
-        QueueNode *tmp = (*root)->next;
-        if (tmp == NULL)
-        {
+    else{
+        QueueNode* tmp = (*root)->next;
+        if(tmp == NULL){
             (*root)->next = qNode;
         }
-        else
-        {
-            while (tmp->next != NULL)
-            {
-                if (tmp->next == NULL)
-                {
+        else{
+            do{
+                if(tmp->next == NULL){
                     tmp->next = qNode;
                 }
-                else
-                {
+                else{
                     tmp = tmp->next;
                 }
-            }
-            while (tmp->next != NULL)
-                ;
+            } while(tmp->next != NULL);
         }
     }
 }
-void dequeue(QueueNode **root)
-{
-    if (isEmpty(*root))
-    {
+
+char dequeue(QueueNode** root){
+    if(isEmpty(*root)){
         return CHAR_MIN;
     }
-    else
-    {
-        QueueNode *tmp = *root;
-        *root = *tmp->next;
+    else{
+        QueueNode* tmp = *root;
+        *root = tmp->next;
         char tmpData = tmp->data;
         free(tmp);
         return tmpData;
     }
 }
-char peek(QueueNode *root)
-{
-    if (isEmpty(root))
-    {
+
+char peek(QueueNode* root){
+    if(isEmpty(root)){
         return CHAR_MIN;
     }
-    else
-    {
+    else{
         return root->data;
     }
 }
 
-int isEmpty(QueueNode *root)
-{
+int isEmpty(QueueNode* root){
     return root == NULL;
 }
 
-void display(QueueNode *root){
+void display(QueueNode* root){
     QueueNode* tmp = root;
-    while (tmp != NULL)
-    {
-        printf("%c <-", tmp -> data);
-        tmp = tmp -> next;
+    while(tmp != NULL){
+        printf("%c <- ", tmp->data);
+        tmp = tmp->next;
     }
-    
 }
